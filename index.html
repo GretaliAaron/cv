@@ -1358,19 +1358,22 @@ function copyUin() {
 
 
  function forceDownload(link) {
-        const url = link.href;
-        fetch(url)
-            .then(response => response.blob())
-            .then(blob => {
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = 'index.html'; // 下载文件名
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            })
-            .catch(() => alert('下载失败'));
-    }
+    const url = link.href;
+    const filename = url.substring(url.lastIndexOf('/') + 1); // 从URL中提取文件名
+
+    fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename; // 使用提取的文件名
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch(() => alert('下载失败'));
+}
+
     </script>
 </body>
 </html>
