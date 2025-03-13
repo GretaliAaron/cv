@@ -314,13 +314,15 @@
 				<section class="section section--white section--projects-1">
 					<h2 class="section__title section__title--primary">简历下载</h2>
 					<div class="section__body">
-						<p><em><a href="https://gretaliaaron.github.io/cv/李安瑞简历电话+8613160981956微信wdryywd腾讯qq2328778354.pdf" target="_blank" 
+						<p><em>
+    <a href="https://gretaliaaron.github.io/cv/李安瑞简历电话+8613160981956微信wdryywd腾讯qq2328778354.pdf"
        style="color: blue;" 
        onmouseover="this.style.color='red';" 
        onmouseout="this.style.color='blue';"
-							       download>
+       onclick="event.preventDefault(); forceDownload(this);">
        PDF版本简历下载
-    </a></em></p>
+    </a>
+</em></p>
 						<p><em><a href="https://gretaliaaron.github.io/cv/index.html" target="_blank" 
        style="color: blue;" 
        onmouseover="this.style.color='red';" 
@@ -1350,6 +1352,17 @@ function copyUin() {
     // 可选：显示提示，告知用户 UIN 号码已复制
     alert("QQ号码已复制: " + uin);
 }
+
+function forceDownload(link) {
+        const url = link.href;
+        const fileName = url.substring(url.lastIndexOf('/') + 1);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName; // 强制下载
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
     </script>
 </body>
 </html>
