@@ -324,11 +324,11 @@
     </a>
 </em></p>
 						<p><em>
-    <a href="https://raw.githubusercontent.com/GretaliAaron/cv/main/index.html" 
+    <a href="https://gretaliaaron.github.io/cv/index.html" 
        style="color: blue;" 
        onmouseover="this.style.color='red';" 
        onmouseout="this.style.color='blue';"
-       download>
+       onclick="event.preventDefault(); forceDownload(this);">
        HTML网页源码下载
     </a>
 </em></p>
@@ -1356,15 +1356,20 @@ function copyUin() {
     alert("QQ号码已复制: " + uin);
 }
 
-function forceDownload(link) {
+
+ function forceDownload(link) {
         const url = link.href;
-        const fileName = url.substring(url.lastIndexOf('/') + 1);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName; // 强制下载
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'index.html'; // 下载文件名
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            })
+            .catch(() => alert('下载失败'));
     }
     </script>
 </body>
